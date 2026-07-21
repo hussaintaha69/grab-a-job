@@ -37,7 +37,7 @@ export default function MotivationalBanner() {
         setIndex((i) => (i + 1) % PHRASES.length);
         setVisible(true);
       }, 300);
-    }, 6000);
+    }, 30000);
 
     return () => clearInterval(interval);
   }, []);
