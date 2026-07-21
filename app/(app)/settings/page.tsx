@@ -51,11 +51,6 @@ export default function SettingsPage() {
         )}
       </div>
 
-      <p className="text-sm text-muted mt-4">
-        Paste this into your copy of <code>bookmarklet/save-job.js</code> in
-        place of <code>YOUR_BOOKMARKLET_TOKEN</code>, then set up the
-        bookmark as described in <code>bookmarklet/README.md</code>.
-      </p>
     </div>
   );
 }
