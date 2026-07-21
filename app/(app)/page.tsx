@@ -177,10 +177,11 @@ export default function Dashboard() {
                 </p>
                 {app.job_url && (
                   <a
-                    href={app.job_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm text-applied underline break-all"
+                     href={app.job_url}
+                     target="_blank"
+                     rel="noreferrer"
+                     title={app.job_url}
+                     className="block truncate text-sm text-applied underline"
                   >
                     {app.job_url}
                   </a>
