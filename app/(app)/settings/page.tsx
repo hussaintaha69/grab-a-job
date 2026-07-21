@@ -24,7 +24,7 @@ export default function SettingsPage() {
     <div className="max-w-lg">
       <h1 className="font-display text-2xl text-ink mb-2">Settings</h1>
       <p className="text-sm text-muted mb-6">
-        This is your personal token for the browser bookmarklet. It's tied
+        This is your personal token for the browser extension. It's tied
         to your account, so jobs you grab always land in your own tracker.
         Don't share it — anyone with this token can add entries to your
         account.
