@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/auth/callback"];
+const PUBLIC_PATHS = ["/login", "/auth/callback", "/privacy"];
 
 export async function middleware(req: NextRequest) {
   // The bookmarklet calls this cross-origin from linkedin.com/naukri.com
