@@ -8,5 +8,5 @@
     "default_title": "Grab a Job"
   },
   "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["https://YOUR-APP.vercel.app/*"]
+  "host_permissions": ["https://grab-a-job.vercel.app/*"]
 }

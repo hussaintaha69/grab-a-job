@@ -1,4 +1,4 @@
-const APP_URL = "https://YOUR-APP.vercel.app";
+const APP_URL = "https://grab-a-job.vercel.app";
 
 const statusEl = document.getElementById("status");
 const setupView = document.getElementById("setup-view");
