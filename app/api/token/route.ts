@@ -4,7 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase-server";
 // Only chrome-extension:// origins get a reflected CORS header here — the
 // website itself calls this same-origin and doesn't need one. Credentialed
 // requests can't use a wildcard origin, so we echo back the exact origin.
-function corsHeaders(req: NextRequest) {
+function corsHeaders(req: NextRequest): Record<string, string> {
   const origin = req.headers.get("origin") || "";
   if (origin.startsWith("chrome-extension://")) {
     return {
