@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Grab a Job",
+  "version": "1.0.0",
+  "description": "Save job listings from any page into your Grab a Job tracker.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Grab a Job"
+  },
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["https://YOUR-APP.vercel.app/*"]
+}
