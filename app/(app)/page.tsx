@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 
 type Status = "saved" | "applied" | "interview" | "offer" | "rejected";
 type SortKey =
@@ -209,6 +210,12 @@ export default function Dashboard() {
                 >
                   delete
                 </button>
+                <Link
+                  href={`/applications/${app.id}/edit`}
+                  className="text-xs text-applied hover:underline"
+                >
+                  edit
+                </Link>
               </div>
             </li>
           ))}
