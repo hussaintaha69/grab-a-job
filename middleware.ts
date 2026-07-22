@@ -6,7 +6,13 @@ const PUBLIC_PATHS = ["/login", "/auth/callback", "/privacy"];
 export async function middleware(req: NextRequest) {
   // The bookmarklet calls this cross-origin from linkedin.com/naukri.com
   // and authenticates with its own personal token, not a browser session.
-  if (req.nextUrl.pathname.startsWith("/api/save-job")) {
+  // The cron route is invoked by Vercel's scheduler with a bearer secret,
+  // also not a browser session — both need to bypass the session check
+  // here and do their own auth inside the route handler.
+  if (
+    req.nextUrl.pathname.startsWith("/api/save-job") ||
+    req.nextUrl.pathname.startsWith("/api/cron")
+  ) {
     return NextResponse.next();
   }
 
@@ -50,5 +56,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/save-job).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|api/save-job|api/cron).*)",
+  ],
 };
