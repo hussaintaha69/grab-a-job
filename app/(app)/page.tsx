@@ -47,15 +47,33 @@ export default function Dashboard() {
   const [filter, setFilter] = useState<Status | "all">("all");
   const [sortBy, setSortBy] = useState<SortKey>("date_new");
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError("");
     const url =
       filter === "all" ? "/api/applications" : `/api/applications?status=${filter}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    setApplications(Array.isArray(data) ? data : []);
-    setLoading(false);
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        setApplications([]);
+        setLoadError(
+          (data && data.error) || `Request failed (status ${res.status}).`
+        );
+        return;
+      }
+
+      setApplications(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setApplications([]);
+      setLoadError("Couldn't reach the server. Check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   }, [filter]);
 
   useEffect(() => {
@@ -109,9 +127,32 @@ export default function Dashboard() {
     <div>
       <div className="flex items-baseline justify-between mb-6">
         <h1 className="font-display text-3xl text-ink">Applications</h1>
-        <span className="font-mono text-sm text-muted">
-          {applications.length} total
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-sm text-muted">
+            {applications.length} total
+          </span>
+          <button
+            onClick={load}
+            disabled={loading}
+            title="Refresh"
+            aria-label="Refresh applications"
+            className="text-muted hover:text-ink transition-colors disabled:opacity-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
+            >
+              <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+              <path d="M21 4v5h-5" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
@@ -150,6 +191,10 @@ export default function Dashboard() {
 
       {loading ? (
         <p className="font-mono text-sm text-muted">Loading…</p>
+      ) : loadError ? (
+        <div className="border border-rejected rounded-sm p-4 text-sm text-rejected">
+          {loadError}
+        </div>
       ) : applications.length === 0 ? (
         <div className="border border-line rounded-sm p-8 text-center">
           <p className="text-ink mb-1">No entries yet.</p>
@@ -177,11 +222,11 @@ export default function Dashboard() {
                 </p>
                 {app.job_url && (
                   <a
-                     href={app.job_url}
-                     target="_blank"
-                     rel="noreferrer"
-                     title={app.job_url}
-                     className="block truncate text-sm text-applied underline"
+                    href={app.job_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={app.job_url}
+                    className="block truncate text-sm text-applied underline"
                   >
                     {app.job_url}
                   </a>
