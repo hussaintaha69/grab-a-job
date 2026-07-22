@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import BackHome from "@/components/BackHome";
 
 export default function NewApplication() {
   const router = useRouter();
@@ -39,6 +40,7 @@ export default function NewApplication() {
 
   return (
     <div className="max-w-lg">
+      <BackHome />
       <h1 className="font-display text-2xl text-ink mb-6">New entry</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
