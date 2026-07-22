@@ -200,7 +200,7 @@ export default function Dashboard() {
           <p className="text-ink mb-1">No entries yet.</p>
           <p className="text-sm text-muted">
             Add one manually, or grab a job straight from the page using
-            the browser extension or bookmarklet.
+            the browser extension.
           </p>
         </div>
       ) : (
