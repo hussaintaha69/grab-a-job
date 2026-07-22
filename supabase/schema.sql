@@ -66,3 +66,31 @@ create policy "insert own token"
 -- Note: /api/save-job reads api_tokens using the service_role key
 -- (which bypasses RLS on purpose), since it has to look up which user
 -- a given token belongs to before it knows whose row to insert.
+
+-- One settings row per user. Currently just the weekly reminder email
+-- toggle, but a natural place to add more personal preferences later.
+create table if not exists user_settings (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  reminders_enabled boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table user_settings enable row level security;
+
+create policy "select own settings"
+  on user_settings for select
+  using (auth.uid() = user_id);
+
+create policy "insert own settings"
+  on user_settings for insert
+  with check (auth.uid() = user_id);
+
+create policy "update own settings"
+  on user_settings for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+-- Note: the weekly reminder cron job reads this table using the
+-- service_role key, bypassing RLS on purpose — it has to look across
+-- every user with reminders enabled, not just one.
