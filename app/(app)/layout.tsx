@@ -15,6 +15,14 @@ export default function AppLayout({
             Grab a Job
           </Link>
           <nav className="flex items-center gap-4">
+            <a
+              href="https://chromewebstore.google.com/detail/kpeokhoficlbnhndnfcfcbmhppkgdcin?utm_source=item-share-cb"
+              target="_blank"
+              rel="noreferrer"
+              className="font-mono text-xs text-muted hover:text-ink transition-colors"
+            >
+              Get the extension
+            </a>
             <Link
               href="/settings"
               className="font-mono text-xs text-muted hover:text-ink transition-colors"
